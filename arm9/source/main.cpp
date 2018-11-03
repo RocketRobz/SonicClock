@@ -35,6 +35,7 @@
 #include "graphics/fontHandler.h"
 
 #include "level.h"
+#include "timesettings.h"
 
 #include "soundbank.h"
 #include "soundbank_bin.h"
@@ -90,6 +91,7 @@ int main(int argc, char **argv) {
 
 	while (1) {
 		levelMode();
+		timeSettingsMode();
 	}
 
 	return 0;

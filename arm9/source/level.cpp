@@ -60,12 +60,9 @@ void levelGraphicLoad(void) {
 }
 
 void levelMode(void) {
-	if (!isBothScreens() || isRenderingTop()) {
-		printSmall(true, 192, 64, RetTime().c_str());
-	} else {
-		printLarge(false, 0, 0, "SonicClock");
-		printLarge(false, 0, 8, "Nothing on this screen yet.");
-	}
+	//if (!isBothScreens() || isRenderingTop()) {
+	//	printSmall(true, 192, 64, RetTime().c_str());
+	//}
 
 	scanKeys();
 	int pressed = keysDownRepeat();
@@ -77,48 +74,46 @@ void levelMode(void) {
 		sonicJumpUp = true;
 	}
 
-	if (!isBothScreens() || isRenderingTop()) {
-		if (sonicJump) {
-			if (!jumpAnimFrameDelay) {
-				jumpAnimFrame++;
-				if (jumpAnimFrame > 4) jumpAnimFrame = 0;
-			}
-			jumpAnimFrameDelay = !jumpAnimFrameDelay;
-
-			if (sonicJumpUp) {
-				sonicYpos -= sonicJumpSpeed;
-				if (sonicJumpDelay == 0) {
-					sonicJumpSpeed--;
-					if (sonicJumpSpeed < 0) {
-						sonicJumpUp = false;
-						sonicJumpSpeed = 0;
-					}
-				}
-			} else {
-				sonicYpos += sonicJumpSpeed;
-				if (sonicJumpDelay == 0) {
-					sonicJumpSpeed++;
-					if (sonicJumpSpeed > 6) {
-						sonicJump = false;
-						jumpAnimFrame = 0;
-						sonicYpos = 128;
-						sonicJumpSpeed = 6;
-					}
-				}
-			}
-			sonicJumpDelay++;
-			if (sonicJumpDelay > 3) sonicJumpDelay = 0;
-		} else {
-			if (!runAnimFrameDelay) {
-				runAnimFrame++;
-				if (runAnimFrame > 3) runAnimFrame = 0;
-			}
-			runAnimFrameDelay = !runAnimFrameDelay;
+	if (sonicJump) {
+		if (!jumpAnimFrameDelay) {
+			jumpAnimFrame++;
+			if (jumpAnimFrame > 4) jumpAnimFrame = 0;
 		}
+		jumpAnimFrameDelay = !jumpAnimFrameDelay;
 
-		floorXpos -= 4;
-		if (floorXpos <= -31) floorXpos = 0;
+		if (sonicJumpUp) {
+			sonicYpos -= sonicJumpSpeed;
+			if (sonicJumpDelay == 0) {
+				sonicJumpSpeed--;
+				if (sonicJumpSpeed < 0) {
+					sonicJumpUp = false;
+					sonicJumpSpeed = 0;
+				}
+			}
+		} else {
+			sonicYpos += sonicJumpSpeed;
+			if (sonicJumpDelay == 0) {
+				sonicJumpSpeed++;
+				if (sonicJumpSpeed > 6) {
+					sonicJump = false;
+					jumpAnimFrame = 0;
+					sonicYpos = 128;
+					sonicJumpSpeed = 6;
+				}
+			}
+		}
+		sonicJumpDelay++;
+		if (sonicJumpDelay > 3) sonicJumpDelay = 0;
+	} else {
+		if (!runAnimFrameDelay) {
+			runAnimFrame++;
+			if (runAnimFrame > 3) runAnimFrame = 0;
+		}
+		runAnimFrameDelay = !runAnimFrameDelay;
 	}
+
+	floorXpos -= 4;
+	if (floorXpos <= -31) floorXpos = 0;
 }
 
 static int floorRenderCount = 0;

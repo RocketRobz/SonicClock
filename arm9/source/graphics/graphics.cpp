@@ -26,12 +26,13 @@
 #include "fontHandler.h"
 
 #include "../level.h"
+#include "../timesettings.h"
 
 extern bool fadeType;
 static int screenBrightness = 25;
 
 static bool renderingTop = true;
-static bool bothScreens = false;
+static bool bothScreens = true;
 static bool singleScreenRendered = false;
 
 // Ported from PAlib (obsolete)
@@ -138,6 +139,7 @@ static void vBlankHandler()
 		}
 		else
 		{
+			timeSettingsDisplay();
 			updateText(false);
 		}
 		glColor(RGB15(31, 31, 31));
@@ -149,10 +151,10 @@ static void vBlankHandler()
 
 void graphicsInit()
 {
-	/* *(u16*)(0x0400006C) |= BIT(14);
+	*(u16*)(0x0400006C) |= BIT(14);
 	*(u16*)(0x0400006C) &= BIT(15);
 	SetBrightness(0, 31);
-	SetBrightness(1, 31); */
+	SetBrightness(1, 31);
 	
 	irqSet(IRQ_VBLANK, vBlankHandler);
 	irqEnable(IRQ_VBLANK);
@@ -169,13 +171,20 @@ void graphicsInit()
 	// Initialize GL in 3D mode
 	glScreen2D();
 
+	// Clear the GL texture state
+	glResetTextures();
+
 	// Set up enough texture memory for our textures
 	// Bank A is just 128kb and we are using 194 kb of
 	// sprites
-	// vramSetBankA(VRAM_A_TEXTURE);
+	vramSetBankA(VRAM_A_TEXTURE);
 	vramSetBankB(VRAM_B_TEXTURE);
-	vramSetBankF(VRAM_F_TEX_PALETTE); // Allocate VRAM bank for all the palettes
-	vramSetBankE(VRAM_E_MAIN_BG);
+	vramSetBankE(VRAM_E_TEX_PALETTE);
+	vramSetBankF(VRAM_F_TEX_PALETTE_SLOT4);
+	vramSetBankG(VRAM_G_TEX_PALETTE_SLOT5); // 16Kb of palette ram, and font textures take up 8*16 bytes.
+	vramSetBankH(VRAM_H_SUB_BG_EXT_PALETTE);
+	vramSetBankI(VRAM_I_SUB_SPRITE_EXT_PALETTE);
 
 	levelGraphicLoad();
+	timeSettingsGraphicLoad();
 }
