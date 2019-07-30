@@ -65,7 +65,7 @@ void levelMode(void) {
 	//}
 
 	scanKeys();
-	int pressed = keysDownRepeat();
+	int pressed = keysDown();
 	
 	if ((pressed & KEY_A) && !sonicJump) {
 		mmEffectEx(&snd_jump);
