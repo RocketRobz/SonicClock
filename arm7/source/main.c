@@ -40,9 +40,6 @@ void ReturntoDSiMenu() {
 //---------------------------------------------------------------------------------
 void VblankHandler(void) {
 //---------------------------------------------------------------------------------
-	if(fifoCheckValue32(FIFO_USER_08)) {
-		ReturntoDSiMenu();
-	}
 }
 
 //---------------------------------------------------------------------------------
@@ -100,6 +97,9 @@ int main() {
 	while (!exitflag) {
 		if ( 0 == (REG_KEYINPUT & (KEY_SELECT | KEY_START | KEY_L | KEY_R))) {
 			exitflag = true;
+		}
+		if(fifoCheckValue32(FIFO_USER_08)) {
+			ReturntoDSiMenu();
 		}
 		resyncClock();
 		swiWaitForVBlank();

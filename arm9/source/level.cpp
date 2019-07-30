@@ -27,7 +27,7 @@ static int sonicTexID, floorTexID;
 static glImage sonicImage[(512 / 32) * (64 / 32)];
 static glImage floorImage[(32 / 32) * (32 / 32)];
 
-//extern mm_sound_effect snd_jump;
+extern mm_sound_effect snd_jump;
 
 void levelGraphicLoad(void) {
 	sonicTexID = glLoadTileSet(sonicImage, // pointer to glImage array
@@ -66,10 +66,9 @@ void levelMode(void) {
 
 	scanKeys();
 	int pressed = keysDownRepeat();
-	swiWaitForVBlank();
 	
 	if ((pressed & KEY_A) && !sonicJump) {
-		//mmEffectEx(&snd_jump);
+		mmEffectEx(&snd_jump);
 		sonicJump = true;
 		sonicJumpUp = true;
 	}

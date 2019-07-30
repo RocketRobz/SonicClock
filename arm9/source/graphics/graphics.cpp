@@ -156,8 +156,6 @@ void graphicsInit()
 	SetBrightness(0, 31);
 	SetBrightness(1, 31);
 	
-	irqSet(IRQ_VBLANK, vBlankHandler);
-	irqEnable(IRQ_VBLANK);
 	////////////////////////////////////////////////////////////
 	videoSetMode(MODE_5_3D);
 	videoSetModeSub(MODE_5_2D);
@@ -187,4 +185,7 @@ void graphicsInit()
 
 	levelGraphicLoad();
 	timeSettingsGraphicLoad();
+
+	irqSet(IRQ_VBLANK, vBlankHandler);
+	irqEnable(IRQ_VBLANK);
 }

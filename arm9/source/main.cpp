@@ -42,7 +42,7 @@
 
 bool fadeType = true;				// false = out, true = in
 
-/*mm_sound_effect snd_jump;
+mm_sound_effect snd_jump;
 
 void InitSound() {
 	mmInitDefaultMem((mm_addr)soundbank_bin);
@@ -56,7 +56,7 @@ void InitSound() {
 		255,	// volume
 		128,	// panning
 	};
-}*/
+}
 
 //---------------------------------------------------------------------------------
 void stop (void) {
@@ -83,15 +83,19 @@ void doPause(int x, int y) {
 int main(int argc, char **argv) {
 //---------------------------------------------------------------------------------
 
+	defaultExceptionHandler();
+
 	//fatInitDefault();
 
-	//InitSound();	
+	InitSound();	
 	graphicsInit();
 	fontInit();
 
 	while (1) {
+		clearText();
 		levelMode();
 		timeSettingsMode();
+		swiWaitForVBlank();
 	}
 
 	return 0;
