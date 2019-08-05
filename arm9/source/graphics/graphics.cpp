@@ -19,7 +19,7 @@
 ------------------------------------------------------------------*/
 
 #include <nds.h>
-#include "gl2d.h"
+#include "../common/gl2d.h"
 #include "FontGraphic.h"
 
 #include "graphics.h"
